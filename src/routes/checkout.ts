@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { getStock } from "../lib/inventory.js";
+import { getStock } from "../lib/inventory.ts";
 
 export const checkout = new Hono();
 

@@ -1,6 +1,6 @@
 # checkout-service
 
-A tiny Bun + Hono checkout microservice used as the demo target for the talk
+A tiny Node + Hono checkout microservice used as the demo target for the talk
 **"Managed Agents with Claude: Code, Ship, and Learn Across Your Dev Workflow."**
 
 It ships with a deliberately planted observability bug so that a Claude agent
@@ -27,10 +27,13 @@ The fix turns N sequential round-trips into one concurrent batch (`Promise.all`)
 ## Run it
 
 ```bash
-bun install
-bun run dev            # starts on :3000
-bun test               # 3 tests, green before and after the fix
+npm install
+npm run dev            # starts on 0.0.0.0:3000
+npm test               # 3 tests, green before and after the fix
 ```
+
+> Node runs TypeScript directly via `--experimental-strip-types` (Node ≥ 22.6),
+> so there is no build step. Requires Node 22.6+.
 
 Generate load so the problem shows up in Dynatrace:
 
@@ -57,7 +60,7 @@ CLAUDE.md               # agent working context
 2. The agent pulls the problem and traces via `dtctl` (`--agent` JSON output).
 3. It localizes the time to the inventory calls, opens `routes/checkout.ts`,
    and recognizes the sequential N+1.
-4. It rewrites the loop as a concurrent batch, runs `bun test` to confirm
+4. It rewrites the loop as a concurrent batch, runs `npm test` to confirm
    behavior is unchanged, and opens a PR explaining the root cause.
 
 Tooling: [`dtctl`](https://github.com/dynatrace-oss/dtctl) as the Dynatrace CLI,

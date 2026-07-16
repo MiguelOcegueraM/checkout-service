@@ -15,7 +15,8 @@ DURATION="${2:-300}"
 echo "Generating load against ${BASE_URL}/checkout for ${DURATION}s..."
 echo "Small carts stay fast; large carts serialize and degrade."
 
-end=$(( $(date +%s) + DURATION ))
+start=$(date +%s)
+end=$(( start + DURATION ))
 
 # Build a large cart payload (30 items) — this is the one that hurts.
 big_items=$(for i in $(seq 1 30); do printf '{"sku":"sku-%03d","qty":1},' "$i"; done)

@@ -1,5 +1,6 @@
-import { describe, expect, it } from "bun:test";
-import { checkout } from "./checkout.js";
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+import { checkout } from "./checkout.ts";
 
 describe("POST /checkout", () => {
   it("rejects an empty cart", async () => {
@@ -8,7 +9,7 @@ describe("POST /checkout", () => {
       body: JSON.stringify({ cartId: "c1", items: [] }),
       headers: { "content-type": "application/json" },
     });
-    expect(res.status).toBe(400);
+    assert.equal(res.status, 400);
   });
 
   it("confirms an order when everything is in stock", async () => {
@@ -23,10 +24,10 @@ describe("POST /checkout", () => {
       }),
       headers: { "content-type": "application/json" },
     });
-    expect(res.status).toBe(200);
+    assert.equal(res.status, 200);
     const json = await res.json();
-    expect(json.status).toBe("confirmed");
-    expect(json.itemCount).toBe(2);
+    assert.equal(json.status, "confirmed");
+    assert.equal(json.itemCount, 2);
   });
 
   // This test encodes the behavior that must be preserved by the fix:
@@ -44,6 +45,6 @@ describe("POST /checkout", () => {
       }),
       headers: { "content-type": "application/json" },
     });
-    expect(res.status).toBeOneOf([200, 409]);
+    assert.ok([200, 409].includes(res.status));
   });
 });

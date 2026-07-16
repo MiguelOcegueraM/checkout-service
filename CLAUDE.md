@@ -1,14 +1,15 @@
 # checkout-service — agent context
 
-Small Bun + Hono TypeScript service used to demo an agentic incident-response
+Small Node + Hono TypeScript service used to demo an agentic incident-response
 workflow: an alert fires in Dynatrace, the agent investigates, finds the root
 cause in this code, fixes it, and opens a PR.
 
 ## Stack
-- Runtime: Bun
+- Runtime: Node (with `--experimental-strip-types` for TS)
+- Server: `@hono/node-server`
 - Framework: Hono
 - Language: TypeScript
-- Tests: `bun test`
+- Tests: `npm test` (node:test)
 
 ## Layout
 - `src/index.ts` — app entrypoint, routes, `/health`
@@ -30,5 +31,5 @@ skill pack; dtctl is the tool that acts on the environment.
 
 ## Working agreement
 - Diagnose from real telemetry before changing code. Cite the problem/trace.
-- Keep the public behavior of `/checkout` identical; `bun test` must stay green.
+- Keep the public behavior of `/checkout` identical; `npm test` must stay green.
 - Explain the root cause in the PR description in plain language.
